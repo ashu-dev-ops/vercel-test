@@ -1,0 +1,113 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+  output     = "./generated"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String?
+}
+
+model Card {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  credit_card_id   Int
+  card_name        String
+  card_issuer      Int
+  highlights       String[]
+  welcome_offers   String?
+  apply_link       String?
+  featured_text    String?
+  issuer_name      String?
+  website          String?
+  url_launch_apply Boolean
+  cc_apply_now_web Boolean
+  apply_link_web   String?
+  for_apply_card   Boolean
+  url              String?
+
+  card_type    String?
+  joining_fees String?
+  renewal_fees String?
+
+  // Benefits booleans
+  bsf_movies   Boolean
+  bsf_travel   Boolean
+  bsf_dining   Boolean
+  bsf_fuel     Boolean
+  bsf_shopping Boolean
+
+  // Rewards and benefits
+  rewards           String[]
+  movie             String?
+  dining            String?
+  travel            String?
+  lounge            String?
+  golf              String?
+  fuel              String?
+  reward_redemption String[]
+
+  @@index([credit_card_id], name: "credit_card_id_idx")
+}
+
+model AirportLounge {
+  id                    String  @id @default(auto()) @map("_id") @db.ObjectId
+  airport_id            String
+  airport_city          String
+  airport_name          String
+  lounge_name           String?
+  lounge_id             String?
+  lounge_timing         String?
+  directions            String?
+  important_information String?
+
+  main_summary         String?
+  introduction         String?
+  airport              String?
+  lounge_name_public   String?
+  international_lounge Boolean?
+  terminals_select     String?
+  location             String?
+  lounge_status        Boolean?
+
+  meta_title       String?
+  meta_description String?
+
+  total_rated_user   Int?
+  min_rated          Int?
+  max_rated          Int?
+  average_rated      Float?
+  total_rating_count Int?
+
+  airport_image_map String?
+  lounge_images     String[] // loungeImages_0_url, loungeImages_1_url, etc.
+
+  // Amenities
+  amenities_id               Int?
+  amenities_field            String?
+  amenities_order            Int?
+  amenities_component_type   String?
+  amenities_component_id     Int?
+  amenities_lounge_detail_id Int?
+
+  amenities_food                 Boolean?
+  amenities_disabled_access      Boolean?
+  amenities_tv                   Boolean?
+  amenities_internet             Boolean?
+  amenities_no_smoking           Boolean?
+  amenities_smoking_area         Boolean?
+  amenities_alcoholic_drinks     Boolean?
+  amenities_newspapers_magazines Boolean?
+  amenities_wifi                 Boolean?
+  amenities_air_conditioning     Boolean?
+  amenities_television           Boolean?
+  amenities_shower               Boolean?
+  amenities_spa                  Boolean?
+  amenities_printer              Boolean?
+}
